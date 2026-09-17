@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: logistic-regression-classifier
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: logistic-regression-classifier
+
+  template:
+    metadata:
+      labels:
+        app: logistic-regression-classifier
+
+    spec:
+      containers:
+        - name: logistic-regression-app
+
+          image: logistic-regression-classifier:latest
+
+          ports:
+            - containerPort: 8501
+
+          command:
+            - streamlit
+
+          args:
+            - run
+            - app.py
+            - --server.address=0.0.0.0
+            - --server.port=8501
